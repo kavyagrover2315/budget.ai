@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BudgetAI — Sign In</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --ff-d: 'Bebas Neue', sans-serif; --ff-b: 'DM Sans', sans-serif; --ff-m: 'DM Mono', monospace; }
+
+        [data-theme="dark"] {
+            --bg:#000508; --txt:#ffffff; --txt-dim:rgba(255,255,255,0.45); --txt-ghost:rgba(255,255,255,0.25);
+            --panel-bg:rgba(255,255,255,0.03); --panel-border:rgba(255,255,255,0.10);
+            --input-bg:rgba(255,255,255,0.05); --input-border:rgba(255,255,255,0.10);
+            --input-focus-b:#FFB800; --input-focus-bg:rgba(255,184,0,0.05); --input-txt:#ffffff;
+            --label-col:rgba(255,255,255,0.50); --chk-border:rgba(255,255,255,0.20); --chk-col:#FFB800;
+            --remember-col:rgba(255,255,255,0.50); --divider-col:rgba(255,255,255,0.20); --divider-line:rgba(255,255,255,0.08);
+            --google-bg:rgba(255,255,255,0.04); --google-border:rgba(255,255,255,0.10);
+            --google-col:rgba(255,255,255,0.80); --google-hbg:rgba(255,255,255,0.08); --google-hborder:rgba(255,255,255,0.25);
+            --nav-bg:transparent; --nav-border:transparent; --logo-col:#00FFB3;
+            --nav-txt:rgba(255,255,255,0.40); --nav-link:#FFB800; --nav-link-b:rgba(255,184,0,0.30);
+            --vignette:rgba(0,5,8,0.88); --quote-bg:rgba(255,184,0,0.02); --quote-border:rgba(255,184,0,0.10);
+            --quote-col:#FFB800; --quote-attr:rgba(255,255,255,0.30);
+            --welcome-col:#ffffff; --welcome-acc:#00FFB3;
+            --submit-grad:linear-gradient(135deg,#FFB800,#FF3CAC); --submit-col:#000000; --submit-sh:rgba(255,50,172,0.30);
+            --proceed-grad:linear-gradient(135deg,#00FFB3,#00c98a); --proceed-col:#000000; --proceed-sh:rgba(0,255,179,0.25);
+            --umini-bg:rgba(0,255,179,0.04); --umini-border:rgba(0,255,179,0.15); --uname-col:#00FFB3;
+            --uemail-col:rgba(255,255,255,0.35); --ubadge-bg:rgba(0,255,179,0.10); --ubadge-border:rgba(0,255,179,0.25);
+            --ubadge-col:#00FFB3; --uavatar-border:#00FFB3; --cur-dot:#FFB800;
+            --cur-ring:rgba(255,184,0,0.40); --cur-blend:screen; --h1-col:#ffffff; --h1-sub:rgba(255,255,255,0.40); --noise-op:0.03;
+        }
+        [data-theme="light"] {
+            --bg:#FFFDF7; --txt:#1a1206; --txt-dim:rgba(26,18,6,0.55); --txt-ghost:rgba(26,18,6,0.32);
+            --panel-bg:rgba(255,255,255,0.80); --panel-border:rgba(176,90,0,0.15);
+            --input-bg:rgba(255,248,235,0.80); --input-border:rgba(176,90,0,0.18);
+            --input-focus-b:#B05A00; --input-focus-bg:rgba(176,90,0,0.05); --input-txt:#1a1206;
+            --label-col:rgba(26,18,6,0.52); --chk-border:rgba(176,90,0,0.30); --chk-col:#B05A00;
+            --remember-col:rgba(26,18,6,0.52); --divider-col:rgba(26,18,6,0.28); --divider-line:rgba(26,18,6,0.10);
+            --google-bg:rgba(255,248,235,0.70); --google-border:rgba(176,90,0,0.15);
+            --google-col:rgba(26,18,6,0.75); --google-hbg:rgba(255,248,235,1.0); --google-hborder:rgba(176,90,0,0.35);
+            --nav-bg:rgba(255,253,247,0.92); --nav-border:rgba(176,90,0,0.10); --logo-col:#B05A00;
+            --nav-txt:rgba(26,18,6,0.45); --nav-link:#8B4500; --nav-link-b:rgba(139,69,0,0.30);
+            --vignette:rgba(255,253,247,0.60); --quote-bg:rgba(176,90,0,0.04); --quote-border:rgba(176,90,0,0.14);
+            --quote-col:#8B4500; --quote-attr:rgba(26,18,6,0.35);
+            --welcome-col:#1a1206; --welcome-acc:#B05A00;
+            --submit-grad:linear-gradient(135deg,#B05A00,#9E2A5A); --submit-col:#ffffff; --submit-sh:rgba(176,90,0,0.30);
+            --proceed-grad:linear-gradient(135deg,#B05A00,#8B4500); --proceed-col:#ffffff; --proceed-sh:rgba(176,90,0,0.25);
+            --umini-bg:rgba(176,90,0,0.05); --umini-border:rgba(176,90,0,0.18); --uname-col:#8B4500;
+            --uemail-col:rgba(26,18,6,0.42); --ubadge-bg:rgba(176,90,0,0.10); --ubadge-border:rgba(176,90,0,0.28);
+            --ubadge-col:#8B4500; --uavatar-border:#B05A00; --cur-dot:#B05A00;
+            --cur-ring:rgba(176,90,0,0.38); --cur-blend:multiply; --h1-col:#1a1206; --h1-sub:rgba(26,18,6,0.45); --noise-op:0.012;
+        }
+
+        html, body { width:100%;min-height:100vh;overflow-x:hidden;overflow-y:auto;background:var(--bg);color:var(--txt);font-family:var(--ff-b);cursor:none;transition:background 0.5s,color 0.5s; }
+
+        #c-dark,#c-light { position:fixed;inset:0;z-index:0;transition:opacity 0.65s; }
+        #c-light { opacity:0;pointer-events:none; }
+        [data-theme="light"] #c-dark { opacity:0;pointer-events:none; }
+        [data-theme="light"] #c-light { opacity:1;pointer-events:none; }
+
+        #vignette { position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at center,transparent 20%,var(--vignette) 100%);transition:background 0.5s; }
+        #noise { position:fixed;inset:0;z-index:2;pointer-events:none;opacity:var(--noise-op);transition:opacity 0.5s;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px; }
+
+        #cur { position:fixed;width:10px;height:10px;border-radius:50%;background:var(--cur-dot);z-index:9999;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:var(--cur-blend);transition:background 0.4s,transform 0.15s,mix-blend-mode 0.4s; }
+        #cur-r { position:fixed;width:32px;height:32px;border:1px solid var(--cur-ring);border-radius:50%;z-index:9998;pointer-events:none;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s,border-color 0.4s; }
+
+        nav { position:fixed;top:0;width:100%;height:70px;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,50px);backdrop-filter:blur(16px);background:var(--nav-bg);border-bottom:1px solid var(--nav-border);transition:background 0.5s,border-color 0.5s; }
+        .nav-logo { font-family:var(--ff-d);font-size:28px;letter-spacing:4px;color:var(--logo-col);text-decoration:none; }
+        .nav-right { display:flex;align-items:center;gap:14px;font-size:11px;color:var(--nav-txt);font-family:var(--ff-m);text-transform:uppercase; }
+        .nav-right a { color:var(--nav-link);text-decoration:none;border-bottom:1px solid var(--nav-link-b); }
+
+        #theme-toggle { width:36px;height:36px;border-radius:50%;background:transparent;border:1px solid var(--input-border);display:flex;align-items:center;justify-content:center;cursor:none;color:var(--txt-dim);flex-shrink:0;position:relative;overflow:hidden;transition:border-color 0.3s,color 0.3s; }
+        #theme-toggle:hover { border-color:var(--cur-dot);color:var(--cur-dot); }
+        #theme-toggle svg { width:14px;height:14px;position:absolute;transition:opacity 0.35s,transform 0.4s; }
+        #tt-moon { opacity:1;transform:rotate(0deg) scale(1); }
+        #tt-sun { opacity:0;transform:rotate(90deg) scale(0.6); }
+        [data-theme="light"] #tt-moon { opacity:0;transform:rotate(-90deg) scale(0.6); }
+        [data-theme="light"] #tt-sun { opacity:1;transform:rotate(0deg) scale(1); }
+
+        #layout { position:relative;z-index:10;min-height:100vh;display:flex;align-items:center;justify-content:center;gap:clamp(24px,4vw,64px);padding:90px clamp(16px,4vw,50px) 40px;max-width:1300px;margin:0 auto;width:100%;box-sizing:border-box; }
+
+        #form-panel { flex:0 1 420px;min-width:0;background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:28px;padding:clamp(24px,3vw,40px);backdrop-filter:blur(30px);animation:fadeUp 1.2s cubic-bezier(0.16,1,0.3,1);transition:background 0.5s,border-color 0.5s;box-shadow:0 8px 48px rgba(0,0,0,0.12); }
+        .form-header h1 { font-family:var(--ff-d);font-size:42px;letter-spacing:1px;line-height:1;margin-bottom:6px;color:var(--h1-col); }
+        .form-header p { font-size:10px;color:var(--h1-sub);font-family:var(--ff-m);text-transform:uppercase;letter-spacing:1px;margin-bottom:30px; }
+
+        .form-row { margin-bottom:18px; }
+        .form-row label { display:block;font-family:var(--ff-m);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--label-col);margin-bottom:8px; }
+        .form-row input { width:100%;padding:14px 18px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:14px;color:var(--input-txt);font-size:14px;outline:none;transition:border-color 0.3s,background 0.3s;font-family:var(--ff-b); }
+        .form-row input::placeholder { color:var(--txt-ghost); }
+        .form-row input:focus { border-color:var(--input-focus-b);background:var(--input-focus-bg); }
+
+        .remember-row { display:flex;align-items:center;gap:10px;margin-bottom:24px;cursor:pointer; }
+        .chk-box { width:18px;height:18px;border:1px solid var(--chk-border);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--chk-col);flex-shrink:0; }
+        .remember-row span { font-size:11px;color:var(--remember-col); }
+
+        .btn-submit { width:100%;padding:15px;background:var(--submit-grad);color:var(--submit-col);border:none;border-radius:14px;font-weight:700;font-size:14px;transition:0.4s;cursor:none;font-family:var(--ff-b); }
+        .btn-submit:hover { transform:translateY(-3px);box-shadow:0 15px 30px var(--submit-sh); }
+
+        .divider { display:flex;align-items:center;gap:12px;margin:22px 0 18px;color:var(--divider-col);font-family:var(--ff-m);font-size:9px;letter-spacing:2px; }
+        .divider::before,.divider::after { content:'';flex:1;height:1px;background:var(--divider-line); }
+
+        .btn-google { width:100%;padding:13px 18px;background:var(--google-bg);border:1px solid var(--google-border);border-radius:14px;color:var(--google-col);font-size:13px;display:flex;align-items:center;justify-content:center;gap:12px;transition:0.3s;cursor:none;font-family:var(--ff-b); }
+        .btn-google:hover { border-color:var(--google-hborder);background:var(--google-hbg);transform:translateY(-2px); }
+
+        .google-status { margin-top:12px;padding:10px 14px;border-radius:10px;font-family:var(--ff-m);font-size:9px;letter-spacing:1.5px;text-align:center;display:none;text-transform:uppercase; }
+        .google-status.success { display:block;background:rgba(0,255,179,0.07);border:1px solid rgba(0,255,179,0.2);color:#00FFB3; }
+        .google-status.error { display:block;background:rgba(255,60,172,0.07);border:1px solid rgba(255,60,172,0.2);color:#FF3CAC; }
+        [data-theme="light"] .google-status.success { background:rgba(176,90,0,0.07);border-color:rgba(176,90,0,0.22);color:#8B4500; }
+        [data-theme="light"] .google-status.error { background:rgba(158,42,90,0.07);border-color:rgba(158,42,90,0.22);color:#9E2A5A; }
+
+        .user-mini { display:none;align-items:center;gap:14px;padding:14px 16px;margin-top:12px;background:var(--umini-bg);border:1px solid var(--umini-border);border-radius:14px;animation:fadeUp 0.4s ease; }
+        .user-mini.visible { display:flex; }
+        .user-mini-avatar { width:42px;height:42px;border-radius:50%;border:1.5px solid var(--uavatar-border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;background:var(--panel-bg); }
+        .user-mini-avatar img { width:100%;height:100%;border-radius:50%;object-fit:cover; }
+        .user-mini-info { flex:1;min-width:0; }
+        .user-mini-name { font-family:var(--ff-d);font-size:16px;letter-spacing:0.5px;color:var(--uname-col);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .user-mini-email { font-family:var(--ff-m);font-size:9px;color:var(--uemail-col);letter-spacing:0.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+        .user-mini-badge { font-family:var(--ff-m);font-size:8px;letter-spacing:1px;padding:4px 10px;border-radius:20px;background:var(--ubadge-bg);border:1px solid var(--ubadge-border);color:var(--ubadge-col);white-space:nowrap;flex-shrink:0; }
+
+        .btn-proceed { width:100%;padding:13px;background:var(--proceed-grad);color:var(--proceed-col);border:none;border-radius:14px;font-weight:700;font-size:13px;transition:0.4s;cursor:none;font-family:var(--ff-b);margin-top:10px; }
+        .btn-proceed:hover { transform:translateY(-3px);box-shadow:0 12px 28px var(--proceed-sh); }
+
+        #quote-panel { flex:0 1 360px;min-width:0;pointer-events:none; }
+        .quote-card { background:var(--quote-bg);border:1px solid var(--quote-border);border-radius:30px;padding:35px;backdrop-filter:blur(10px);margin-bottom:30px;min-height:160px;display:flex;flex-direction:column;justify-content:center; }
+        .quote-text { font-family:var(--ff-d);font-size:26px;line-height:1.1;color:var(--quote-col);margin-bottom:10px;transition:opacity 0.8s; }
+        .quote-attr { font-family:var(--ff-m);font-size:10px;color:var(--quote-attr); }
+        .welcome-msg { font-family:var(--ff-d);font-size:clamp(36px,4vw,50px);line-height:0.85;color:var(--welcome-col); }
+        .welcome-msg span { color:var(--welcome-acc); }
+
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)} }
+
+        @media (max-width:920px) { #layout{flex-direction:column;align-items:center;justify-content:flex-start;min-height:100vh;height:auto;padding-top:90px;} #quote-panel{display:none;} #form-panel{flex:none;width:100%;max-width:460px;} }
+        @media (max-width:480px) { nav{padding:0 16px;} .nav-right{font-size:9px;gap:8px;} .nav-right span{display:none;} }
+    </style>
+</head>
+<body>
+<canvas id="c-dark"></canvas>
+<canvas id="c-light"></canvas>
+<div id="vignette"></div>
+<div id="noise"></div>
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<nav>
+    <a class="nav-logo" href="#">BUDGETAI</a>
+    <div class="nav-right">
+        <span>DON'T HAVE AN ACCOUNT?</span> <a href="/signup">SIGN UP FREE →</a>
+        <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+            <svg id="tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <svg id="tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<div id="layout">
+    <div id="form-panel">
+        <div class="form-header">
+            <h1>WELCOME BACK</h1>
+            <p>Authentication required to access vault</p>
+        </div>
+
+        <form onsubmit="handleLogin(event)">
+            <div class="form-row">
+                <label>Email Address</label>
+                <input type="email" id="loginEmail" placeholder="name@domain.com" required>
+            </div>
+            <div class="form-row">
+                <label>Secure Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" required>
+            </div>
+            <div class="remember-row" onclick="toggleChk()">
+                <div class="chk-box" id="chk"><span style="display:none">✓</span></div>
+                <span>Keep session active</span>
+            </div>
+            <button type="submit" class="btn-submit">UNLOCK DASHBOARD →</button>
+        </form>
+
+        <div class="divider">OR CONTINUE WITH</div>
+
+        <button class="btn-google" id="google-btn" onclick="triggerGoogleSignIn()">
+            <svg width="18" height="18" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            Continue with Google
+        </button>
+
+        <div id="google-status" class="google-status"></div>
+
+        <div class="user-mini" id="user-mini">
+            <div class="user-mini-avatar" id="user-avatar-wrap">
+                <img id="user-avatar-img" src="" alt="" style="display:none">
+                <span id="user-avatar-emoji">🧑</span>
+            </div>
+            <div class="user-mini-info">
+                <div class="user-mini-name" id="user-name"></div>
+                <div class="user-mini-email" id="user-email"></div>
+            </div>
+            <div class="user-mini-badge">✓ VERIFIED</div>
+        </div>
+        <button class="btn-proceed" id="proceed-btn" style="display:none" onclick="proceedToDashboard()">
+            ENTER DASHBOARD →
+        </button>
+    </div>
+
+    <div id="quote-panel">
+        <div class="quote-card">
+            <div id="q-text" class="quote-text">EVERY RUPEE COUNTS WHEN YOU KNOW WHERE IT GOES.</div>
+            <div class="quote-attr">— BUDGETAI</div>
+        </div>
+        <div class="welcome-msg">FINANCIAL<br><span>FREEDOM</span><br>AWAITS.</div>
+    </div>
+</div>
+
+<script>
+/* ═══ THREE.JS DARK ═══ */
+const dCanvas=document.getElementById('c-dark');
+const dRen=new THREE.WebGLRenderer({canvas:dCanvas,antialias:true,alpha:true});
+dRen.setSize(window.innerWidth,window.innerHeight);dRen.setClearColor(0x000508,1);
+const dScene=new THREE.Scene(),dCam=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,1000);dCam.position.z=15;
+const starsGeo=new THREE.BufferGeometry(),posArr=new Float32Array(5000*3);
+for(let i=0;i<5000*3;i++)posArr[i]=(Math.random()-0.5)*60;
+starsGeo.setAttribute('position',new THREE.BufferAttribute(posArr,3));
+const stars=new THREE.Points(starsGeo,new THREE.PointsMaterial({size:0.08,color:0xFFB800,transparent:true,opacity:0.7,blending:THREE.AdditiveBlending}));dScene.add(stars);
+const dGroup=new THREE.Group();
+dGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(4,0),new THREE.MeshPhongMaterial({color:0xFFB800,wireframe:true,transparent:true,opacity:0.4,emissive:0xFFB800,emissiveIntensity:0.5})));
+dGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(4.6,0),new THREE.MeshPhongMaterial({color:0x00FFB3,wireframe:true,transparent:true,opacity:0.2,emissive:0x00FFB3,emissiveIntensity:0.8})));
+dGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(5.5,1),new THREE.MeshPhongMaterial({color:0xFF3CAC,wireframe:true,transparent:true,opacity:0.08,emissive:0xFF3CAC,emissiveIntensity:0.4})));
+const dPL1=new THREE.PointLight(0xFFB800,2,10);dPL1.position.set(2,2,2);
+const dPL2=new THREE.PointLight(0x00FFB3,2,10);dPL2.position.set(-2,-2,-2);
+dGroup.add(dPL1,dPL2);dGroup.position.x=2.5;dScene.add(dGroup);dScene.add(new THREE.PointLight(0xFFFFFF,0.5));
+
+/* ═══ THREE.JS LIGHT ═══ */
+const lCanvas=document.getElementById('c-light');
+const lRen=new THREE.WebGLRenderer({canvas:lCanvas,antialias:true,alpha:true});
+lRen.setSize(window.innerWidth,window.innerHeight);lRen.setClearColor(0xFFFDF7,1);
+const lScene=new THREE.Scene(),lCam=new THREE.PerspectiveCamera(60,window.innerWidth/window.innerHeight,0.1,1000);lCam.position.z=15;
+lScene.fog=new THREE.FogExp2(0xFFFDF7,0.006);lScene.add(new THREE.AmbientLight(0xFFF5E0,1.1));
+const lPL1=new THREE.PointLight(0xFFD580,2.5,55);lPL1.position.set(8,8,10);lScene.add(lPL1);
+const lGroup=new THREE.Group();lGroup.position.x=2.8;
+lGroup.add(new THREE.Mesh(new THREE.SphereGeometry(2.8,32,32),new THREE.MeshPhongMaterial({color:0xFFD580,transparent:true,opacity:0.08,emissive:0xFFB840,emissiveIntensity:0.25,shininess:200})));
+lGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(3.8,0),new THREE.MeshPhongMaterial({color:0xFFD580,wireframe:true,transparent:true,opacity:0.22,emissive:0xFFD580,emissiveIntensity:0.3})));
+lScene.add(lGroup);
+
+/* ═══ CURSOR ═══ */
+const curEl=document.getElementById('cur'),curR=document.getElementById('cur-r');
+document.addEventListener('mousemove',e=>{curEl.style.left=e.clientX+'px';curEl.style.top=e.clientY+'px';curR.style.left=e.clientX+'px';curR.style.top=e.clientY+'px';});
+document.querySelectorAll('a,button,.remember-row,input').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{curEl.style.transform='translate(-50%,-50%) scale(2)';curR.style.width='52px';curR.style.height='52px';});
+    el.addEventListener('mouseleave',()=>{curEl.style.transform='translate(-50%,-50%) scale(1)';curR.style.width='32px';curR.style.height='32px';});
+});
+
+/* ═══ ANIMATE ═══ */
+let t=0;
+function animate(){
+    requestAnimationFrame(animate);t+=0.008;
+    dGroup.rotation.y+=0.0004;dGroup.rotation.z+=0.0003;dGroup.position.y=Math.sin(t*0.5)*0.28;stars.rotation.y+=0.0001;dRen.render(dScene,dCam);
+    lGroup.rotation.y+=0.0005;lGroup.position.y=Math.sin(t*0.45)*0.22;lPL1.position.x=Math.sin(t*0.35)*10;lRen.render(lScene,lCam);
+}
+animate();
+window.addEventListener('resize',()=>{const w=window.innerWidth,h=window.innerHeight;dCam.aspect=w/h;dCam.updateProjectionMatrix();dRen.setSize(w,h);lCam.aspect=w/h;lCam.updateProjectionMatrix();lRen.setSize(w,h);});
+
+/* ═══ THEME ═══ */
+function toggleTheme(){const html=document.documentElement;const newTheme=html.getAttribute('data-theme')==='dark'?'light':'dark';html.setAttribute('data-theme',newTheme);try{localStorage.setItem('budgetai-theme',newTheme);}catch(e){}}
+(function(){try{const s=localStorage.getItem('budgetai-theme');if(s==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
+
+/* ═══ QUOTES ═══ */
+const quotes=["EVERY RUPEE COUNTS WHEN YOU KNOW WHERE IT GOES.","YOUR WEALTH IS THE PRODUCT OF YOUR CAPACITY TO THINK.","DO NOT SAVE WHAT IS LEFT AFTER SPENDING.","FINANCIAL FREEDOM IS A MENTAL STATE FIRST.","A BUDGET IS TELLING YOUR MONEY WHERE TO GO."];
+let qIdx=0;
+const qText=document.getElementById('q-text');
+setInterval(()=>{qText.style.opacity=0;setTimeout(()=>{qText.textContent=quotes[qIdx=(qIdx+1)%quotes.length];qText.style.opacity=1;},800);},5000);
+
+/* ═══ REMEMBER CHECKBOX ═══ */
+function toggleChk(){const t=document.getElementById('chk').querySelector('span');t.style.display=t.style.display==='none'?'block':'none';}
+
+/* ═══ SET USER MINI CARD ═══ */
+function showUserMini(user){
+    const emojiMap={male:'👨',female:'👩',other:'🧑'};
+    const emoji=user.emoji||emojiMap[user.gender]||'🧑';
+    if(user.picture){
+        document.getElementById('user-avatar-img').src=user.picture;
+        document.getElementById('user-avatar-img').style.display='block';
+        document.getElementById('user-avatar-emoji').style.display='none';
+    } else {
+        document.getElementById('user-avatar-emoji').textContent=emoji;
+        document.getElementById('user-avatar-img').style.display='none';
+        document.getElementById('user-avatar-emoji').style.display='block';
+    }
+    document.getElementById('user-name').textContent=(user.name||'').toUpperCase();
+    document.getElementById('user-email').textContent=user.email||'';
+    document.getElementById('user-mini').classList.add('visible');
+    document.getElementById('proceed-btn').style.display='block';
+    document.getElementById('google-btn').style.display='none';
+}
+
+/* ═══ PROCEED TO DASHBOARD ═══ 
+     ✅ FIXED: was 'templates\index.html' (backslash) — now uses forward slash
+     Update the path below to match where your dashboard file actually lives:
+       - '/dashboard'          → if dashboard route exists in Flask backend
+       - 'templates/index.html' → if dashboard is inside a /templates/ subfolder
+*/
+function proceedToDashboard(){
+    window.location.href = '/dashboard';  // ✅ Flask route that renders index.html with session
+}
+
+/* ═══ EMAIL LOGIN ═══ */
+function handleLogin(e){
+    e.preventDefault();
+
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const btn = document.querySelector('.btn-submit');
+
+    if(!email || !password){
+        showError("Enter email & password");
+        return;
+    }
+
+    if(!email.includes("@")){
+        showError("Invalid email");
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = "⏳ Logging in...";
+
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+
+    fetch('/login',{
+        method:'POST',
+        credentials:'include',
+        body:formData
+    })
+    .then(res => res.json())
+    .then(data=>{
+        if(data.status === 'ok'){
+            window.location.href = '/dashboard'; // ✅ FIXED
+        } else {
+            showError(data.message || "Login failed");
+            btn.disabled = false;
+            btn.textContent = "UNLOCK DASHBOARD →";
+        }
+    })
+    .catch(err=>{
+        showError("Server error");
+        btn.disabled = false;
+        btn.textContent = "UNLOCK DASHBOARD →";
+    });
+}
+
+// ✅ NEW: Display error messages as popup notification
+function showError(message){
+    // Create error notification
+    const errorEl = document.createElement('div');
+    errorEl.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #FF3CAC;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        font-family: 'DM Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        box-shadow: 0 8px 32px rgba(255, 60, 172, 0.4);
+        z-index: 10000;
+        animation: slideIn 0.4s ease-out;
+        max-width: 400px;
+    `;
+    errorEl.textContent = message;
+    
+    document.body.appendChild(errorEl);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        errorEl.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => errorEl.remove(), 300);
+    }, 5000);
+}
+
+// ✅ NEW: Animation styles
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(400px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    @keyframes slideOut {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateX(400px);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+/* ═══ GOOGLE AUTH ═══ */
+const GOOGLE_CLIENT_ID='552889467598-fq9e9ghv029umhhc39qam8vmjpon9urq.apps.googleusercontent.com';
+
+function setStatus(type,msg){const el=document.getElementById('google-status');el.className='google-status '+type;el.innerHTML=msg;}
+
+function onGoogleSuccess(profile){
+    const emojiMap={male:'👨',female:'👩'};
+    const gender=profile.gender||'other';
+    const emoji=emojiMap[gender]||'🧑';
+    const user={name:profile.name,firstName:profile.given_name,lastName:profile.family_name,email:profile.email,picture:profile.picture,username:profile.email.split('@')[0],gender,emoji,provider:'google'};
+    try{sessionStorage.setItem('budgetai_user',JSON.stringify(user));localStorage.setItem('budgetai_user',JSON.stringify(user));}catch(e){}
+    setStatus('success','✓ GOOGLE AUTHENTICATION SUCCESSFUL');
+    
+    // Redirect handled by triggerGoogleSignIn → /api/google-verify-token
+}
+
+function handleGoogleCredential(response){
+    try{
+        const payload=JSON.parse(atob(response.credential.split('.')[1]));
+        // Send credential to backend for verification
+        fetch('/api/google-verify', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({credential: response.credential})
+        })
+        .then(r => r.json())
+        .then(data => {
+            if(data.status === 'ok') {
+                onGoogleSuccess(payload);
+            } else {
+                setStatus('error', '✗ AUTH FAILED — ' + (data.message || 'PLEASE TRY AGAIN'));
+            }
+        })
+        .catch(e => {
+            setStatus('error','✗ AUTH FAILED — ' + e.message);
+        });
+    }
+    catch(e){setStatus('error','✗ AUTH FAILED — PLEASE TRY AGAIN');}
+}
+
+function triggerGoogleSignIn(){
+    if(typeof google==='undefined'){setStatus('error','✗ GOOGLE SDK NOT LOADED — CHECK CONNECTION');return;}
+    google.accounts.oauth2.initTokenClient({
+        client_id:GOOGLE_CLIENT_ID,
+        scope:'openid email profile',
+        callback:(tokenResponse)=>{
+            if(tokenResponse.error){setStatus('error','✗ '+tokenResponse.error.toUpperCase());return;}
+            // Send token to backend for verification
+            fetch('/api/google-verify-token', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({access_token: tokenResponse.access_token})
+            })
+            .then(r => r.json())
+            .then(data => {
+                if(data.status === 'ok') {
+                    setStatus('success','✓ GOOGLE AUTHENTICATION SUCCESSFUL');
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';  // ✅
+                    }, 1000);
+                } else {
+                    setStatus('error','✗ AUTH FAILED — ' + (data.message || 'PLEASE TRY AGAIN'));
+                }
+            })
+            .catch(e => setStatus('error','✗ PROFILE FETCH FAILED — ' + e.message));
+        }
+    }).requestAccessToken();
+}
+
+/* ═══ AUTO-FILL FROM SIGNUP ═══ */
+window.addEventListener('load',()=>{
+    if(typeof google!=='undefined'){
+        google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,callback:handleGoogleCredential,auto_select:false});
+    }
+    // ✅ Pre-fill email from localStorage (set by signup page)
+    try{
+        const pending=JSON.parse(localStorage.getItem('budgetai_pending_login')||'null');
+        if(pending?.email){
+            document.getElementById('loginEmail').value=pending.email;
+            localStorage.removeItem('budgetai_pending_login');
+            // Focus password field since email is already filled
+            setTimeout(()=>document.getElementById('loginPassword').focus(), 100);
+        }
+    }catch(e){}
+    // ✅ Also check URL param ?email=
+    try{
+        const urlEmail = new URLSearchParams(window.location.search).get('email');
+        if(urlEmail && !document.getElementById('loginEmail').value){
+            document.getElementById('loginEmail').value = urlEmail;
+            setTimeout(()=>document.getElementById('loginPassword').focus(), 100);
+        }
+    }catch(e){}
+});
+</script>
+</body>
+</html>

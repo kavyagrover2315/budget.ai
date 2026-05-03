@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BudgetAI — Create Account</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --ff-d: 'Bebas Neue', sans-serif; --ff-b: 'DM Sans', sans-serif; --ff-m: 'DM Mono', monospace; }
+
+        [data-theme="dark"] {
+            --bg:#000508; --txt:#ffffff; --txt-dim:rgba(255,255,255,0.55); --txt-ghost:rgba(255,255,255,0.30);
+            --nav-bg:transparent; --nav-border:transparent; --logo-col:#00FFB3;
+            --nav-txt:rgba(255,255,255,0.45); --nav-link:#00FFB3; --nav-link-b:rgba(0,255,179,0.22);
+            --panel-bg:rgba(255,255,255,0.025); --panel-border:rgba(255,255,255,0.10);
+            --input-bg:rgba(255,255,255,0.05); --input-border:rgba(255,255,255,0.10);
+            --input-focus-b:#00FFB3; --input-focus-sh:rgba(0,255,179,0.12);
+            --input-txt:#ffffff; --input-ph:rgba(255,255,255,0.40); --label-col:rgba(255,255,255,0.55);
+            --divider-col:rgba(255,255,255,0.22); --divider-line:rgba(255,255,255,0.06);
+            --google-bg:rgba(255,255,255,0.04); --google-border:rgba(255,255,255,0.12);
+            --google-col:rgba(255,255,255,0.80); --google-hborder:rgba(66,133,244,0.40); --google-hbg:rgba(66,133,244,0.06);
+            --submit-bg:linear-gradient(135deg,#00FFB3,#00E0A0); --submit-col:#000000; --submit-sh:rgba(0,255,179,0.35);
+            --showbtn-col:rgba(255,255,255,0.40); --showbtn-hov:#00FFB3;
+            --captcha-bg:rgba(255,255,255,0.03); --captcha-border:rgba(255,255,255,0.06);
+            --captcha-div:rgba(255,255,255,0.10); --captcha-col:#00FFB3; --captcha-ph:rgba(255,255,255,0.28);
+            --captcha-inp-f:#00FFB3; --captcha-msg:rgba(255,255,255,0.28);
+            --correct-col:#00FFB3; --wrong-col:#ff4d6d;
+            --terms-col:rgba(255,255,255,0.32); --terms-acc:rgba(0,255,179,0.70); --terms-acc-b:rgba(0,255,179,0.22);
+            --quote-bg:rgba(0,255,179,0.02); --quote-border:rgba(0,255,179,0.10);
+            --quote-col:#00FFB3; --quote-attr:#00FFB3; --hero-col:#ffffff; --hero-acc:#00FFB3;
+            --vignette:rgba(0,5,8,0.88); --noise-op:0.03;
+            --cur-dot:#00FFB3; --cur-ring:rgba(0,255,179,0.30); --cur-blend:screen;
+            --toast-bg:#0d1f17; --toast-border:rgba(0,255,179,0.30); --toast-col:rgba(255,255,255,0.80); --toast-dot:#00FFB3;
+            --gender-bg:rgba(255,255,255,0.04); --gender-active:rgba(0,255,179,0.12); --gender-active-b:#00FFB3; --gender-col:#00FFB3;
+            --success-bg:rgba(0,255,179,0.08); --success-border:rgba(0,255,179,0.25); --success-col:#00FFB3;
+        }
+        [data-theme="light"] {
+            --bg:#FFFDF7; --txt:#1a1206; --txt-dim:rgba(26,18,6,0.62); --txt-ghost:rgba(26,18,6,0.38);
+            --nav-bg:rgba(255,253,247,0.92); --nav-border:rgba(176,90,0,0.10); --logo-col:#B05A00;
+            --nav-txt:rgba(26,18,6,0.45); --nav-link:#8B4500; --nav-link-b:rgba(139,69,0,0.25);
+            --panel-bg:rgba(255,255,255,0.82); --panel-border:rgba(176,90,0,0.14);
+            --input-bg:rgba(255,248,235,0.80); --input-border:rgba(176,90,0,0.18);
+            --input-focus-b:#B05A00; --input-focus-sh:rgba(176,90,0,0.10);
+            --input-txt:#1a1206; --input-ph:rgba(26,18,6,0.32); --label-col:rgba(26,18,6,0.55);
+            --divider-col:rgba(26,18,6,0.28); --divider-line:rgba(26,18,6,0.09);
+            --google-bg:rgba(255,248,235,0.70); --google-border:rgba(176,90,0,0.14);
+            --google-col:rgba(26,18,6,0.72); --google-hborder:rgba(66,133,244,0.38); --google-hbg:rgba(255,248,235,1.0);
+            --submit-bg:linear-gradient(135deg,#B05A00,#8B4500); --submit-col:#ffffff; --submit-sh:rgba(176,90,0,0.35);
+            --showbtn-col:rgba(26,18,6,0.38); --showbtn-hov:#B05A00;
+            --captcha-bg:rgba(176,90,0,0.04); --captcha-border:rgba(176,90,0,0.10);
+            --captcha-div:rgba(176,90,0,0.18); --captcha-col:#8B4500; --captcha-ph:rgba(26,18,6,0.28);
+            --captcha-inp-f:#B05A00; --captcha-msg:rgba(26,18,6,0.30);
+            --correct-col:#2d7a3a; --wrong-col:#c0392b;
+            --terms-col:rgba(26,18,6,0.35); --terms-acc:rgba(139,69,0,0.80); --terms-acc-b:rgba(139,69,0,0.25);
+            --quote-bg:rgba(176,90,0,0.04); --quote-border:rgba(176,90,0,0.13);
+            --quote-col:#8B4500; --quote-attr:#B05A00; --hero-col:#1a1206; --hero-acc:#B05A00;
+            --vignette:rgba(255,253,247,0.62); --noise-op:0.012;
+            --cur-dot:#B05A00; --cur-ring:rgba(176,90,0,0.32); --cur-blend:multiply;
+            --toast-bg:#fff8ed; --toast-border:rgba(176,90,0,0.28); --toast-col:rgba(26,18,6,0.75); --toast-dot:#B05A00;
+            --gender-bg:rgba(176,90,0,0.04); --gender-active:rgba(176,90,0,0.10); --gender-active-b:#B05A00; --gender-col:#8B4500;
+            --success-bg:rgba(176,90,0,0.07); --success-border:rgba(176,90,0,0.25); --success-col:#8B4500;
+        }
+
+        html, body { width:100%; min-height:100vh; overflow-x:hidden; overflow-y:auto; background:var(--bg); color:var(--txt); font-family:var(--ff-b); cursor:none; transition:background 0.5s,color 0.5s; }
+
+        #c-dark,#c-light { position:fixed;inset:0;z-index:0;transition:opacity 0.65s; }
+        #c-light { opacity:0;pointer-events:none; }
+        [data-theme="light"] #c-dark { opacity:0;pointer-events:none; }
+        [data-theme="light"] #c-light { opacity:1;pointer-events:none; }
+
+        #vignette { position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at center,transparent 25%,var(--vignette) 100%);transition:background 0.5s; }
+        #noise { position:fixed;inset:0;z-index:2;pointer-events:none;opacity:var(--noise-op);transition:opacity 0.5s;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px; }
+
+        #cur { position:fixed;width:9px;height:9px;border-radius:50%;background:var(--cur-dot);z-index:9999;pointer-events:none;transform:translate(-50%,-50%);mix-blend-mode:var(--cur-blend);transition:transform 0.12s,background 0.4s; }
+        #cur-r { position:fixed;width:28px;height:28px;border:1px solid var(--cur-ring);border-radius:50%;z-index:9998;pointer-events:none;transform:translate(-50%,-50%);transition:width 0.25s,height 0.25s,border-color 0.4s; }
+
+        nav { position:fixed;top:0;left:0;right:0;z-index:200;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 36px;background:var(--nav-bg);backdrop-filter:blur(18px);border-bottom:1px solid var(--nav-border);transition:background 0.5s,border-color 0.5s; }
+        .nav-logo { font-family:var(--ff-d);font-size:24px;letter-spacing:4px;color:var(--logo-col);text-decoration:none;transition:color 0.5s; }
+        .nav-right { display:flex;align-items:center;gap:12px;font-size:10px;color:var(--nav-txt);font-family:var(--ff-m);text-transform:uppercase;letter-spacing:1.5px; }
+        .nav-right a { color:var(--nav-link);text-decoration:none;border-bottom:1px solid var(--nav-link-b);transition:color 0.5s; }
+
+        #theme-toggle { width:32px;height:32px;border-radius:50%;background:transparent;border:1px solid var(--input-border);display:flex;align-items:center;justify-content:center;cursor:none;color:var(--txt-dim);flex-shrink:0;position:relative;overflow:hidden;transition:border-color 0.3s,color 0.3s; }
+        #theme-toggle:hover { border-color:var(--cur-dot);color:var(--cur-dot); }
+        #theme-toggle svg { width:13px;height:13px;position:absolute;transition:opacity 0.35s,transform 0.4s; }
+        #tt-moon { opacity:1;transform:rotate(0deg) scale(1); }
+        #tt-sun { opacity:0;transform:rotate(90deg) scale(0.6); }
+        [data-theme="light"] #tt-moon { opacity:0;transform:rotate(-90deg) scale(0.6); }
+        [data-theme="light"] #tt-sun { opacity:1;transform:rotate(0deg) scale(1); }
+
+        #layout { position:relative;z-index:10;min-height:100vh;display:flex;align-items:center;justify-content:center;gap:40px;padding:72px 32px 32px; }
+
+        #left-panel { flex:0 0 260px;display:flex;flex-direction:column;align-items:center;gap:14px; }
+        .orb-container { position:relative;width:160px;height:160px;flex-shrink:0; }
+        .orb-glow { position:absolute;inset:-28px;border-radius:50%;background:radial-gradient(circle,rgba(0,255,179,0.12) 0%,transparent 70%);animation:pulse-glow 3s ease-in-out infinite; }
+        @keyframes pulse-glow { 0%,100%{transform:scale(1);opacity:0.7}50%{transform:scale(1.1);opacity:1} }
+        #sphere-canvas { position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none; }
+        .quote-card { width:100%;background:var(--quote-bg);border:1px solid var(--quote-border);border-radius:18px;padding:16px 18px;backdrop-filter:blur(10px);transition:background 0.5s,border-color 0.5s; }
+        #q-text { font-family:var(--ff-d);font-size:16px;line-height:1.15;letter-spacing:0.5px;color:var(--quote-col);margin-bottom:8px;transition:opacity 0.6s,color 0.5s; }
+        .quote-attr { font-family:var(--ff-m);font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--quote-attr);transition:color 0.5s; }
+        .hero-text { font-family:var(--ff-d);font-size:32px;line-height:0.9;text-transform:uppercase;text-align:center;color:var(--hero-col);transition:color 0.5s; }
+        .hero-text span { color:var(--hero-acc);transition:color 0.5s; }
+
+        /* ── FORM PANEL ── */
+        #form-panel { flex:0 1 440px;min-width:0;background:var(--panel-bg);border:1px solid var(--panel-border);border-radius:20px;padding:24px 28px;backdrop-filter:blur(30px);box-shadow:0 8px 40px rgba(0,0,0,0.10);transition:background 0.5s,border-color 0.5s; }
+
+        .form-hdr { margin-bottom:12px; }
+        .form-hdr h1 { font-family:var(--ff-d);font-size:34px;letter-spacing:1px;line-height:1;color:var(--txt); }
+        .form-hdr p { font-family:var(--ff-m);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--txt-ghost);margin-top:3px; }
+
+        .google-btn { width:100%;padding:10px 14px;background:var(--google-bg);border:1px solid var(--google-border);border-radius:12px;color:var(--google-col);font-family:var(--ff-m);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:10px;cursor:none;transition:all 0.3s;margin-bottom:12px; }
+        .google-btn:hover { border-color:var(--google-hborder);background:var(--google-hbg);transform:translateY(-1px); }
+
+        .divider { display:flex;align-items:center;gap:10px;color:var(--divider-col);font-family:var(--ff-m);font-size:9px;letter-spacing:2px;margin:0 0 12px; }
+        .divider::before,.divider::after { content:'';flex:1;height:1px;background:var(--divider-line); }
+
+        .field-grid { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px; }
+        .field { margin-bottom:10px; }
+        .field label { display:block;font-family:var(--ff-m);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--label-col);margin-bottom:5px; }
+        .field input,.field select { width:100%;padding:9px 12px;background:var(--input-bg);border:1px solid var(--input-border);border-radius:11px;color:var(--input-txt);font-size:13px;font-family:var(--ff-b);outline:none;transition:border-color 0.3s,background 0.3s,box-shadow 0.3s;appearance:none; }
+        .field input::placeholder { color:var(--input-ph); }
+        .field input:focus,.field select:focus { border-color:var(--input-focus-b);box-shadow:0 0 0 2px var(--input-focus-sh); }
+        .field .pw-wrap { position:relative; }
+        .field .pw-wrap input { padding-right:48px; }
+        .show-btn { position:absolute;right:10px;top:50%;transform:translateY(-50%);font-family:var(--ff-m);font-size:9px;color:var(--showbtn-col);background:none;border:none;cursor:none;transition:color 0.25s; }
+        .show-btn:hover { color:var(--showbtn-hov); }
+
+        /* Gender selector */
+        .gender-row { display:flex;gap:8px;margin-bottom:10px; }
+        .gender-opt { flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px;background:var(--gender-bg);border:1px solid var(--input-border);border-radius:11px;cursor:none;transition:all 0.25s;font-family:var(--ff-m);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-ghost); }
+        .gender-opt .emoji { font-size:20px;line-height:1; }
+        .gender-opt.active { background:var(--gender-active);border-color:var(--gender-active-b);color:var(--gender-col); }
+        .gender-opt:hover:not(.active) { border-color:var(--input-focus-b);color:var(--txt-dim); }
+        .gender-label { display:block;font-family:var(--ff-m);font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--label-col);margin-bottom:5px; }
+
+        /* Captcha */
+        .captcha-wrap { display:flex;gap:10px;align-items:center;background:var(--captcha-bg);padding:9px 14px;border-radius:11px;border:1px solid var(--captcha-border);margin-bottom:4px; }
+        .captcha-expr { font-family:var(--ff-d);font-size:17px;color:var(--captcha-col);letter-spacing:1px;flex-shrink:0; }
+        .captcha-refresh { background:none;border:none;cursor:none;color:var(--txt-ghost);font-size:11px;transition:color 0.3s; }
+        .captcha-refresh:hover { color:var(--captcha-col); }
+        .captcha-refresh.spin { animation:spin360 0.4s ease; }
+        @keyframes spin360 { from{transform:rotate(0deg)}to{transform:rotate(360deg)} }
+        .captcha-div { width:1px;height:20px;background:var(--captcha-div);flex-shrink:0; }
+        .captcha-input { flex:1;background:transparent;border:none;outline:none;text-align:center;font-family:var(--ff-d);font-size:16px;color:var(--input-txt); }
+        .captcha-input::placeholder { color:var(--captcha-ph); }
+        .captcha-status { font-size:12px;flex-shrink:0;width:16px;text-align:center; }
+        .captcha-msg { font-family:var(--ff-m);font-size:9px;color:var(--captcha-msg);margin-bottom:10px;height:11px; }
+        input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; }
+        input[type=number] { -moz-appearance:textfield;appearance:textfield; }
+
+        .submit-btn { width:100%;padding:12px;background:var(--submit-bg);color:var(--submit-col);border:none;border-radius:12px;font-family:var(--ff-b);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:none;transition:all 0.3s;margin-top:10px; }
+        .submit-btn:hover { transform:translateY(-1px);box-shadow:0 8px 24px var(--submit-sh); }
+
+        .terms-txt { font-family:var(--ff-m);font-size:9px;letter-spacing:1px;text-align:center;color:var(--terms-col);margin-top:8px; }
+        .terms-txt span { color:var(--terms-acc);cursor:none;border-bottom:1px solid var(--terms-acc-b); }
+
+        /* Success toast */
+        #success-toast { position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);z-index:9999;opacity:0;pointer-events:none;transition:all 0.5s ease; }
+        .toast-inner { background:var(--toast-bg);border:1px solid var(--toast-border);border-radius:18px;padding:12px 22px;display:flex;align-items:center;gap:10px;backdrop-filter:blur(20px); }
+        .toast-dot { width:7px;height:7px;border-radius:50%;background:var(--toast-dot);animation:pulse-d 1s ease-in-out infinite; }
+        @keyframes pulse-d { 0%,100%{opacity:1}50%{opacity:0.4} }
+        .toast-txt { font-family:var(--ff-m);font-size:11px;letter-spacing:1.5px;color:var(--toast-col);text-transform:uppercase; }
+
+        @keyframes slideUp { from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)} }
+        .si { opacity:0;animation:slideUp 0.5s ease forwards; }
+        .si:nth-child(1){animation-delay:0.05s}.si:nth-child(2){animation-delay:0.10s}.si:nth-child(3){animation-delay:0.15s}
+        .si:nth-child(4){animation-delay:0.20s}.si:nth-child(5){animation-delay:0.25s}.si:nth-child(6){animation-delay:0.30s}
+        .si:nth-child(7){animation-delay:0.35s}.si:nth-child(8){animation-delay:0.40s}.si:nth-child(9){animation-delay:0.45s}
+
+        .is-correct { color:var(--correct-col)!important; }
+        .is-wrong { color:var(--wrong-col)!important; }
+
+        @media(max-width:900px){ #left-panel{display:none;} #form-panel{flex:none;width:100%;max-width:480px;} }
+    </style>
+</head>
+<body>
+
+<canvas id="c-dark"></canvas>
+<canvas id="c-light"></canvas>
+<div id="vignette"></div>
+<div id="noise"></div>
+<div id="cur"></div>
+<div id="cur-r"></div>
+
+<nav>
+    <a href="/" class="nav-logo">BUDGETAI</a>
+    <div class="nav-right">
+        Already registered? <a href="/login">Sign In →</a>
+        <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+            <svg id="tt-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <svg id="tt-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+        </button>
+    </div>
+</nav>
+
+<div id="layout">
+    <div id="left-panel">
+        <div class="orb-container">
+            <div class="orb-glow"></div>
+            <canvas id="sphere-canvas"></canvas>
+        </div>
+        <div class="quote-card">
+            <div id="q-text">STOP WORKING FOR MONEY, MAKE YOUR MONEY WORK FOR YOU.</div>
+            <div class="quote-attr">— BudgetAI</div>
+        </div>
+        <div class="hero-text">Start Your<br><span>Journey</span> Now.</div>
+    </div>
+
+    <div id="form-panel">
+        <div class="form-hdr si">
+            <h1>CREATE ACCOUNT</h1>
+            <p>Join the 1% today · Free forever</p>
+        </div>
+
+        <div class="si">
+            <button class="google-btn" onclick="handleGoogleSignUp()">
+                <svg width="15" height="15" viewBox="0 0 24 24">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                </svg>
+                Continue with Google
+            </button>
+        </div>
+
+        <div class="divider si">OR SIGN UP WITH EMAIL</div>
+
+        <form id="signup-form" method="POST" action="/signup" onsubmit="handleSignUp(event)">
+            <!-- Name -->
+            <div class="field-grid si">
+                <div class="field" style="margin-bottom:0">
+                    <label>First Name</label>
+                    <input type="text" id="first_name" name="first_name" placeholder="First" required>
+                </div>
+                <div class="field" style="margin-bottom:0">
+                    <label>Last Name</label>
+                    <input type="text" id="last_name" name="last_name" placeholder="Last" required>
+                </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="si" style="margin-bottom:10px;margin-top:10px">
+                <div class="gender-label">Gender</div>
+                <div class="gender-row">
+                    <div class="gender-opt" id="g-male" onclick="selectGender('male')">
+                        <span class="emoji">👨</span><span>Male</span>
+                    </div>
+                    <div class="gender-opt" id="g-female" onclick="selectGender('female')">
+                        <span class="emoji">👩</span><span>Female</span>
+                    </div>
+                    <div class="gender-opt" id="g-other" onclick="selectGender('other')">
+                        <span class="emoji">🧑</span><span>Other</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email + Password + Mobile -->
+            <div class="field si">
+                <label>Email Address</label>
+                <input type="email" id="email" name="email" placeholder="demo@gmail.com" required>
+            </div>
+            <div class="field si">
+                <label>Mobile Number</label>
+                <input type="tel" id="mobile" name="mobile" placeholder="10-digit number" pattern="[0-9]{10}" required>
+            </div>
+            <div class="field si">
+                <label>Password</label>
+                <div class="pw-wrap">
+                    <input type="password" id="password" name="password" placeholder="Min 8 characters" minlength="8" required>
+                    <button type="button" class="show-btn" onclick="togglePassword(event)">SHOW</button>
+                </div>
+            </div>
+
+            <!-- Captcha -->
+            <div class="si">
+                <div class="captcha-wrap">
+                    <div id="captcha-display" class="captcha-expr">{{ captcha_text }}</div>
+                    <button type="button" id="refresh-btn" class="captcha-refresh" onclick="window.location.reload()">↻</button>
+                    <div class="captcha-div"></div>
+                    <input type="number" id="captcha-input" name="captcha" class="captcha-input" placeholder="= ?" required>
+                    <div id="captcha-status" class="captcha-status"></div>
+                </div>
+                <div id="captcha-msg" class="captcha-msg"></div>
+            </div>
+
+            <div class="si">
+                <button type="submit" class="submit-btn" id="submit-btn">Create Account →</button>
+            </div>
+        </form>
+
+        <p class="terms-txt si">By signing up you agree to our <span>Terms</span> &amp; <span>Privacy Policy</span>.</p>
+    </div>
+</div>
+
+<div id="success-toast">
+    <div class="toast-inner">
+        <div class="toast-dot"></div>
+        <span class="toast-txt" id="toast-txt">Account created! Redirecting…</span>
+    </div>
+</div>
+
+<script>
+/* ═══════ THREE.JS BACKGROUND — DARK ═══════ */
+const dCanvas=document.getElementById('c-dark');
+const dRen=new THREE.WebGLRenderer({canvas:dCanvas,antialias:true,alpha:true});
+dRen.setSize(window.innerWidth,window.innerHeight);dRen.setClearColor(0x000508,1);
+const dScene=new THREE.Scene(),dCam=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+dCam.position.z=5;
+const bgGeo=new THREE.BufferGeometry(),bgPts=new Float32Array(3000*3);
+for(let i=0;i<3000*3;i++)bgPts[i]=(Math.random()-0.5)*30;
+bgGeo.setAttribute('position',new THREE.BufferAttribute(bgPts,3));
+const dStars=new THREE.Points(bgGeo,new THREE.PointsMaterial({size:0.05,color:0x00FFB3,transparent:true,opacity:0.65}));
+dScene.add(dStars);
+const npGeo=new THREE.BufferGeometry(),npPos=new Float32Array(800*3),npCol=new Float32Array(800*3);
+const npPal=[new THREE.Color(0x00FFB3),new THREE.Color(0xFFB800),new THREE.Color(0xFF3CAC)];
+for(let i=0;i<800;i++){npPos[i*3]=(Math.random()-0.5)*30;npPos[i*3+1]=(Math.random()-0.5)*20;npPos[i*3+2]=(Math.random()-0.5)*15;const c=npPal[i%npPal.length];npCol[i*3]=c.r;npCol[i*3+1]=c.g;npCol[i*3+2]=c.b;}
+npGeo.setAttribute('position',new THREE.BufferAttribute(npPos,3));npGeo.setAttribute('color',new THREE.BufferAttribute(npCol,3));
+dScene.add(new THREE.Points(npGeo,new THREE.PointsMaterial({size:0.04,vertexColors:true,transparent:true,opacity:0.5})));
+const dGroup=new THREE.Group();
+[[4.0,0x00FFB3,0.30,0.4],[4.8,0xFFB800,0.18,0.5],[6.0,0xFF3CAC,0.07,0.3]].forEach(([r,c,op,ei])=>{
+    dGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(r,0),new THREE.MeshPhongMaterial({color:c,wireframe:true,transparent:true,opacity:op,emissive:c,emissiveIntensity:ei})));
+});
+const dPL1=new THREE.PointLight(0xFFB800,2,12);dPL1.position.set(2,2,2);
+const dPL2=new THREE.PointLight(0x00FFB3,2,12);dPL2.position.set(-2,-2,-2);
+dGroup.add(dPL1,dPL2);dGroup.position.set(3,0,-5);dScene.add(dGroup);dScene.add(new THREE.PointLight(0xffffff,0.4));
+
+/* ═══════ THREE.JS BACKGROUND — LIGHT ═══════ */
+const lCanvas=document.getElementById('c-light');
+const lRen=new THREE.WebGLRenderer({canvas:lCanvas,antialias:true,alpha:true});
+lRen.setSize(window.innerWidth,window.innerHeight);lRen.setClearColor(0xFFFDF7,1);
+const lScene=new THREE.Scene(),lCam=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+lCam.position.z=5;lScene.fog=new THREE.FogExp2(0xFFFDF7,0.005);
+lScene.add(new THREE.AmbientLight(0xFFF5E0,1.1));
+const lPL1=new THREE.PointLight(0xFFD580,2.2,55);lPL1.position.set(8,6,10);lScene.add(lPL1);
+const wGeo=new THREE.BufferGeometry(),wPos=new Float32Array(1400*3),wCol=new Float32Array(1400*3);
+const wPal=[new THREE.Color(0xFFD580),new THREE.Color(0xFFA040),new THREE.Color(0xE8B060)];
+for(let i=0;i<1400;i++){wPos[i*3]=(Math.random()-0.5)*32;wPos[i*3+1]=(Math.random()-0.5)*22;wPos[i*3+2]=(Math.random()-0.5)*18;const c=wPal[i%wPal.length];wCol[i*3]=c.r;wCol[i*3+1]=c.g;wCol[i*3+2]=c.b;}
+wGeo.setAttribute('position',new THREE.BufferAttribute(wPos,3));wGeo.setAttribute('color',new THREE.BufferAttribute(wCol,3));
+const lStars=new THREE.Points(wGeo,new THREE.PointsMaterial({size:0.055,vertexColors:true,transparent:true,opacity:0.45}));lScene.add(lStars);
+const lGroup=new THREE.Group();
+[[4.0,0xFFD580,0.22,0.35],[4.9,0xFFA040,0.13,0.30],[6.2,0x8B6AE8,0.06,0.20]].forEach(([r,c,op,ei])=>{
+    lGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(r,0),new THREE.MeshPhongMaterial({color:c,wireframe:true,transparent:true,opacity:op,emissive:c,emissiveIntensity:ei})));
+});
+lGroup.position.set(3.5,0,-5);lScene.add(lGroup);
+
+/* ═══════ ORB ═══════ */
+const orbCanvas=document.getElementById('sphere-canvas');
+const orbRen=new THREE.WebGLRenderer({canvas:orbCanvas,antialias:true,alpha:true});
+orbRen.setPixelRatio(window.devicePixelRatio);
+const orbScene=new THREE.Scene(),orbCam=new THREE.PerspectiveCamera(45,1,0.1,100);orbCam.position.z=3.5;
+const coreMesh=new THREE.Mesh(new THREE.SphereGeometry(0.9,64,64),new THREE.MeshPhongMaterial({color:0x001a12,emissive:0x003320,specular:0x00FFB3,shininess:120,transparent:true,opacity:0.7}));
+orbScene.add(coreMesh);
+const wireMesh=new THREE.Mesh(new THREE.SphereGeometry(0.92,18,18),new THREE.MeshBasicMaterial({color:0x00FFB3,wireframe:true,transparent:true,opacity:0.18}));
+orbScene.add(wireMesh);
+orbScene.add(new THREE.Mesh(new THREE.SphereGeometry(1.05,32,32),new THREE.MeshBasicMaterial({color:0x00FFB3,transparent:true,opacity:0.04,side:THREE.BackSide})));
+const ring1=new THREE.Mesh(new THREE.TorusGeometry(1.2,0.012,8,100),new THREE.MeshBasicMaterial({color:0x00FFB3,transparent:true,opacity:0.45}));
+ring1.rotation.x=Math.PI*0.35;orbScene.add(ring1);
+const ring2=new THREE.Mesh(new THREE.TorusGeometry(1.38,0.006,8,100),new THREE.MeshBasicMaterial({color:0x00FFB3,transparent:true,opacity:0.22}));
+ring2.rotation.x=Math.PI*0.6;ring2.rotation.y=Math.PI*0.2;orbScene.add(ring2);
+orbScene.add(new THREE.AmbientLight(0x001a12,2));
+const orbPL1=new THREE.PointLight(0x00FFB3,3,10);orbPL1.position.set(2,2,2);orbScene.add(orbPL1);
+orbScene.add(new THREE.PointLight(0xffffff,0.5,10));
+function resizeOrb(){const el=orbCanvas.parentElement;const sz=Math.min(el.offsetWidth,el.offsetHeight);orbRen.setSize(sz,sz);}
+resizeOrb();
+
+/* ═══════ CURSOR ═══════ */
+const curEl=document.getElementById('cur'),curR=document.getElementById('cur-r');
+let mouseX=0,mouseY=0;
+document.addEventListener('mousemove',e=>{curEl.style.left=e.clientX+'px';curEl.style.top=e.clientY+'px';curR.style.left=e.clientX+'px';curR.style.top=e.clientY+'px';mouseX=(e.clientX/window.innerWidth-0.5)*2;mouseY=(e.clientY/window.innerHeight-0.5)*2;});
+document.querySelectorAll('a,button,input,select,.gender-opt').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{curEl.style.transform='translate(-50%,-50%) scale(2)';curR.style.width='48px';curR.style.height='48px';});
+    el.addEventListener('mouseleave',()=>{curEl.style.transform='translate(-50%,-50%) scale(1)';curR.style.width='28px';curR.style.height='28px';});
+});
+
+/* ═══════ ANIMATE ═══════ */
+let t=0;
+function animate(){
+    requestAnimationFrame(animate);t+=0.008;
+    dStars.rotation.y+=0.0001;dGroup.rotation.y+=0.0004;dGroup.rotation.z+=0.0003;dGroup.position.y=Math.sin(t*0.5)*0.3;dRen.render(dScene,dCam);
+    lStars.rotation.y+=0.00008;lGroup.rotation.y+=0.0004;lGroup.position.y=Math.sin(t*0.45)*0.25;lPL1.position.x=Math.sin(t*0.35)*10;lRen.render(lScene,lCam);
+    coreMesh.rotation.y=t*0.3+mouseX*0.3;coreMesh.rotation.x=mouseY*0.2;wireMesh.rotation.y=t*0.15;ring1.rotation.z=t*0.4;ring2.rotation.z=-t*0.25;
+    const sc=1+Math.sin(t*1.2)*0.025;coreMesh.scale.set(sc,sc,sc);orbRen.render(orbScene,orbCam);
+}
+animate();
+window.addEventListener('resize',()=>{const w=window.innerWidth,h=window.innerHeight;dCam.aspect=w/h;dCam.updateProjectionMatrix();dRen.setSize(w,h);lCam.aspect=w/h;lCam.updateProjectionMatrix();lRen.setSize(w,h);resizeOrb();});
+
+/* ═══════ THEME ═══════ */
+function toggleTheme(){const html=document.documentElement;const isLight=html.getAttribute('data-theme')==='dark';html.setAttribute('data-theme',isLight?'light':'dark');try{localStorage.setItem('budgetai-theme',isLight?'light':'dark');}catch(e){}}
+(function(){try{const s=localStorage.getItem('budgetai-theme');if(s==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();
+
+/* ═══════ QUOTES ═══════ */
+const quotes=["STOP WORKING FOR MONEY, MAKE YOUR MONEY WORK FOR YOU.","EVERY RUPEE SAVED IS A RUPEE WORKING FOR YOU.","FINANCIAL FREEDOM IS A CALCULATION.","YOUR FUTURE SELF WILL THANK YOU TODAY.","TRACK TODAY, OWN TOMORROW."];
+let qi=0;
+setInterval(()=>{const el=document.getElementById('q-text');el.style.opacity=0;setTimeout(()=>{qi=(qi+1)%quotes.length;el.textContent=quotes[qi];el.style.opacity=1;},600);},5000);
+
+/* ═══════ GENDER SELECTOR ═══════ */
+let selectedGender='';
+function selectGender(g){
+    selectedGender=g;
+    document.querySelectorAll('.gender-opt').forEach(el=>el.classList.remove('active'));
+    document.getElementById('g-'+g).classList.add('active');
+}
+
+/* ═══════ CAPTCHA ═══════ */
+const OPS=[(a,b)=>({expr:`${a} + ${b}`,ans:a+b}),(a,b)=>({expr:`${a+b} − ${b}`,ans:a}),(a,b)=>({expr:`${a} × ${b}`,ans:a*b})];
+function checkCaptcha(input){
+    const status=document.getElementById('captcha-status');
+    const msg=document.getElementById('captcha-msg');
+    if(input.value===''){status.textContent='';msg.textContent='';return;}
+    status.textContent='';msg.textContent='';
+}
+
+function togglePassword(event){const p=document.getElementById('password');const btn=event.target;if(p.type==='password'){p.type='text';btn.textContent='HIDE';}else{p.type='password';btn.textContent='SHOW';}}
+
+/* ═══════ TOAST ═══════ */
+function showToast(msg){
+    document.getElementById('toast-txt').textContent=msg;
+    const t=document.getElementById('success-toast');
+    t.style.opacity='1';t.style.transform='translateX(-50%) translateY(0)';t.style.pointerEvents='auto';
+    setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(-50%) translateY(16px)';t.style.pointerEvents='none';},3000);
+}
+
+/* ═══════ GOOGLE SIGN-UP ═══════ */
+const GOOGLE_CLIENT_ID='552889467598-fq9e9ghv029umhhc39qam8vmjpon9urq.apps.googleusercontent.com';
+
+function handleGoogleSignUp(){
+    if(typeof google==='undefined'){showToast('Google SDK not loaded');return;}
+    google.accounts.oauth2.initTokenClient({
+        client_id:GOOGLE_CLIENT_ID,
+        scope:'openid email profile',
+        callback:(tokenResponse)=>{
+            if(tokenResponse.error){showToast('Google auth failed: '+tokenResponse.error);return;}
+            fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+tokenResponse.access_token}})
+            .then(r=>r.json())
+            .then(profile=>{
+                const emoji=profile.gender==='female'?'👩':'👨';
+                const user={name:profile.name,firstName:profile.given_name,lastName:profile.family_name,email:profile.email,picture:profile.picture,username:profile.email.split('@')[0],gender:profile.gender||'other',emoji,provider:'google'};
+                try{
+                    localStorage.setItem('budgetai_user',JSON.stringify(user));
+                    // ✅ Pre-fill email on login page
+                    localStorage.setItem('budgetai_pending_login',JSON.stringify({email:profile.email}));
+                }catch(e){}
+                showToast('✓ Google Account Created! Redirecting…');
+                setTimeout(()=>window.location.href='/login',1800);  // ✅ Correct page
+            })
+            .catch(()=>showToast('Profile fetch failed'));
+        }
+    }).requestAccessToken();
+}
+
+/* ═══════ EMAIL SIGN-UP ═══════ */
+function handleSignUp(e){
+    e.preventDefault();
+    if(!selectedGender){
+        showToast('Please select your gender');
+        return;
+    }
+    
+    const captchaInput = document.getElementById('captcha-input').value.trim();
+    if(!captchaInput){
+        document.getElementById('captcha-msg').textContent='✗ Solve the captcha first';
+        document.getElementById('captcha-msg').className='captcha-msg is-wrong';
+        return;
+    }
+    
+    // Submit form via AJAX
+    const formData = new FormData(document.getElementById('signup-form'));
+    const email = formData.get('email') || '';
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = '⏳ Creating account...';
+    
+    fetch('/signup', {
+        method: 'POST',
+        credentials: 'include',   // ✅ send/receive session cookie
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === 'ok') {
+            showToast('✓ Account created! Redirecting to dashboard…');
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 1500);
+        } else {
+            showToast(data.message || 'Signup failed. Please try again.');
+            btn.disabled = false;
+            btn.textContent = 'Create Account →';
+            document.getElementById('refresh-btn').classList.add('spin');
+        }
+    })
+    .catch(err => {
+        showToast('Error: ' + err.message);
+        btn.disabled = false;
+        btn.textContent = 'Create Account →';
+    });
+}
+
+window.addEventListener('load',()=>{
+    if(typeof google!=='undefined'){
+        google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,callback:()=>{},auto_select:false});
+    }
+});
+</script>
+</body>
+</html>
