@@ -3,8 +3,8 @@ flask-cors==4.0.1
 flask-bcrypt==1.0.1
 pdfplumber==0.11.4
 reportlab==4.0.9
-pandas==2.2.2
-numpy==1.26.4
+pandas>=2.1,<2.3
+numpy>=1.24,<2.0
 scikit-learn==1.5.1
 python-dateutil==2.9.0
 groq==0.11.0
